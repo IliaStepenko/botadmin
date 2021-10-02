@@ -1,21 +1,11 @@
-import sqlite3
 
-tables = {
-'source_chats_tn' : "source_chats",
-'target_chats_tn' : "source_chats",
-'route_chats_tn' : "route_chats"
-}
+class DBConfig:
+    DBNAME = "d6m1o6sffr2l8a"
+    USER = "sgsonrowlgcoor"
+    PASSWORD = "c3ee4c8902762f5b60bdde37717722daad44cc3b43e8731e0553cb21efff1c5e"
+    HOST = "ec2-34-242-89-204.eu-west-1.compute.amazonaws.com"
 
-
-class DataSource:
-    _DB_NAME = 'fapi.db'
-
-    def __init__(self):
-        self.connection = sqlite3.connect(self._DB_NAME)
-        all_tables_q = '''SELECT name FROM sqlite_master WHERE type IN ('table','view') AND name NOT LIKE 'sqlite_%' ORDER BY 1;'''
-        cursor = self.connection.cursor()
-        cursor.execute(all_tables_q)
-        self.connection.commit()
-        cursor.close()
-
+    @classmethod
+    def get_ass_db_url(cls):
+        return f"postgresql+asyncpg://{cls.USER}:{cls.PASSWORD}@{cls.HOST}:5432/{cls.DBNAME}"
 
